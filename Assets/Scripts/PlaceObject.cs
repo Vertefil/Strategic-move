@@ -19,7 +19,11 @@ public class PlaceObject : MonoBehaviour
 
         //На лкм ставим и убераем скрипт
         if (Input.GetMouseButtonDown(0))
+        {
             Destroy(gameObject.GetComponent<PlaceObject>());
+            if(gameObject.GetComponent<TankGener>())
+                gameObject.GetComponent<TankGener>().enabled = true;
+        }
         //На среднюю кнопку мыши вращаем объект
         if(Input.GetKey(KeyCode.Tab))
             transform.Rotate(Vector3.up * Time.deltaTime * rotSpeed);

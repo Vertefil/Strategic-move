@@ -29,13 +29,15 @@ public class SelectAreaControl : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit agentTarget, 1000f, layer))
                 foreach (var el in players)
-                    el.GetComponent<NavMeshAgent>().SetDestination(agentTarget.point);
+                    if (el != null)
+                        el.GetComponent<NavMeshAgent>().SetDestination(agentTarget.point);
         }
 
         if (Input.GetMouseButtonDown(0))
         {
             foreach(var el in players)
-                el.transform.GetChild(1).gameObject.SetActive(false);
+                if(el != null)
+                    el.transform.GetChild(1).gameObject.SetActive(false);
             players.Clear();
 
             //Через рейкасты (Лучи) узнаем положение мыши и куда можем поставить объект
@@ -95,8 +97,9 @@ public class SelectAreaControl : MonoBehaviour
                 layerMask);
 
             //Перебираем тех, кто попал и добавляем в список
-            foreach( var el in hits)
+            foreach(var el in hits)
             {
+                if (el.collider.CompareTag("Enemy")) continue;
                 players.Add(el.transform.gameObject);
                 el.transform.GetChild(1).gameObject.SetActive(true);
             }
